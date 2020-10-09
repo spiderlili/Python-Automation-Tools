@@ -12,20 +12,23 @@ pointsStr = 'points'
 pathStr = 'path'
 pathDefineStr = 'd'
 repeatPathClassStr = '<path class="cls-1" d="'
+# tokenizerStart = '<polygon class="cls-1" points="'
+tokenizerStart = 'path class="cls-1" d="'
+tokenizerEnd = 'Z"/>'
 
 try:
     with open(fileName) as svgFileObj:
         svgContentLines = svgFileObj.readlines()
 
     for line in svgContentLines:
-        print("before: " + line.strip())
+        print("Before: " + line.strip())
 
         pathCount = line.count(pathStr)
         polygonCount = line.count(polygonStr)
         endStrCount = line.count(endStr)
-        print("path count in old file: " + str(pathCount))
-        print("polygon count in old file: " + str(polygonCount))
-        print("end str count in old file: " + str(endStrCount))
+        print("path count in the old file: " + str(pathCount))
+        print("polygon count in the old file: " + str(polygonCount))
+        print("end str count in the old file: " + str(endStrCount))
 
         if polygonCount > 0:
             line = line.replace(polygonStr, pathStr)
@@ -47,21 +50,32 @@ try:
             lastPathLocation = line.rfind(repeatPathClassStr)
             line = line[:lastPathLocation] + firstChar + line[lastPathLocation+len(repeatPathClassStr):]
 
-        print("after: " + line.strip())
+        # extract svg coordinate numbers
+        svgCoordsStart = line.find(tokenizerStart) + len(tokenizerStart)
+        svgCoordsEnd = line.find(endStr)
+        svgCoords = line[svgCoordsStart:svgCoordsEnd]
+
+        # split svg coordinates into lists from M to Z
+        tempEnd = svgCoords.index(lastChar)
+        svgList = svgCoords[:tempEnd]
+        print ("svg list: " + svgList)
+
+        print ("Extracted svg coordinates: " + svgCoords)
+        print("After: " + line.strip())
 
     if polygonCount > 0:
-        print("there are polygons in the SVG file which needs to be converted to paths")
+        print("There are polygons in the SVG file which needs to be converted to paths")
     if pathCount == 0:
-        print("there is no explicit path in the SVG file")
+        print("There is no explicit path in the SVG file")
     if pathCount > 1:
-        print("there are > 1 path in the SVG file")
+        print("There are > 1 path in the SVG file")
 
     # separate out a different list, divider between errorMsg/successMsg
     print("\n--------------------------------------------\n")
 
 # FileNotFoundError
 except IOError:
-    errorMsg = "sorry, the file: " + fileName + "cannot be found"
+    errorMsg = "Sorry, the file: " + fileName + "cannot be found"
     print (errorMsg)
 
 else:
