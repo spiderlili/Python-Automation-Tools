@@ -54,17 +54,45 @@ try:
         svgCoordsStart = line.find(tokenizerStart) + len(tokenizerStart)
         svgCoordsEnd = line.find(endStr)
         svgCoords = line[svgCoordsStart:svgCoordsEnd]
+        # svgCoords = svgCoords.split(' ')
 
-        # split svg coordinates into lists from M to Z
+        # split svg coordinates into lists from M to Z, for all pairs found from M to Z
+        # if svgCoords.find(endStr) > 1:
+        tempStart = svgCoords.index(firstChar)
         tempEnd = svgCoords.index(lastChar)
-        svgList = svgCoords[:tempEnd]
-        print ("svg list: " + svgList)
+        svgList = svgCoords[tempStart:tempEnd]
+        svgList = svgList.split(' ')
+
+        # list of index at which the first character M occurs
+        svgFirstCharIndex = [svg for svg, coord in enumerate(svgCoords) if coord[0] == firstChar]
+        print ("number of SVG Paths: " + str(len(svgFirstCharIndex)))
+        print ("svg list comprehension debug: " + str(svgFirstCharIndex))
+        numberOfPaths = len(svgFirstCharIndex)
+
+        # create empty paths lists depending on number of Ms
+        paths = [[] for path in range(0, numberOfPaths)]
+        # print paths
+
+        # slice according to number of times character M occurs
+        for x in paths:
+            num = numberOfPaths
+            x = svgCoords[svgFirstCharIndex[numberOfPaths-num]: svgFirstCharIndex[numberOfPaths-1]]
+            num += 1
+            print x
+        # paths[0] = svgCoords[svgFirstCharIndex[0]:svgFirstCharIndex[len(svgFirstCharIndex)-1]]
+
+        # add midChar L to each odd coordinate, skip the 1st coordinate which starts with M
+        for i in range(2, len(svgList), 2):
+            svgList[i] = midChar + svgList[i]
+            # print(svgList[i])
+        svgList = ' '.join(svgList)
+        print ("svg list after appending L: " + str(svgList))
 
         print ("Extracted svg coordinates: " + svgCoords)
         print("After: " + line.strip())
 
     if polygonCount > 0:
-        print("There are polygons in the SVG file which needs to be converted to paths")
+        print("There are polygons in the SVG file, all of them need to be converted to paths")
     if pathCount == 0:
         print("There is no explicit path in the SVG file")
     if pathCount > 1:
