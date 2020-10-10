@@ -65,6 +65,7 @@ try:
 
         # list of index at which the first character M occurs
         svgFirstCharIndex = [svg for svg, coord in enumerate(svgCoords) if coord[0] == firstChar]
+        svgLastCharIndex = [svg for svg, coord in enumerate(svgCoords) if coord[0] == lastChar]
         print ("number of SVG Paths: " + str(len(svgFirstCharIndex)))
         print ("svg list comprehension debug: " + str(svgFirstCharIndex))
         numberOfPaths = len(svgFirstCharIndex)
@@ -78,8 +79,10 @@ try:
             num = numberOfPaths
             x = svgCoords[svgFirstCharIndex[numberOfPaths-num]: svgFirstCharIndex[numberOfPaths-1]]
             num += 1
-            print x
-        # paths[0] = svgCoords[svgFirstCharIndex[0]:svgFirstCharIndex[len(svgFirstCharIndex)-1]]
+            # print x
+        paths[0] = svgCoords[svgFirstCharIndex[0]:svgFirstCharIndex[len(svgFirstCharIndex)-1]]
+        paths[1] = svgCoords[len(svgFirstCharIndex)-1:svgLastCharIndex[len(svgLastCharIndex)-1]]
+        print paths
 
         # add midChar L to each odd coordinate, skip the 1st coordinate which starts with M
         for i in range(2, len(svgList), 2):
