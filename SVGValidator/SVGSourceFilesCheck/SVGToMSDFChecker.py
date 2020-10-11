@@ -22,13 +22,18 @@ def SVGToMSDFAnalyser(filename):
         for line in fileContentLines:
             pathCount = line.count(pathStr)
             polygonCount = line.count(polygonStr)
-            print("The file: " + filename + " has: " + str(pathCount) + " paths.")
-            print("The file: " + filename + " has: " + str(polygonCount) + " polygons.")
-        # wordsInFile = fileContent.split()
-        # numberOfWords = len(wordsInFile)
+            if pathCount == 0:
+                print("The file: " + filename + " cannot be converted to MSDF because it has " + str(pathCount) + " path. There are " + str(polygonCount) + " polygons which needs to be converted to 1 single path.")
+            if pathCount > 1:
+                if polygonCount == 0:
+                    print("The file: " + filename + " cannot be converted to MSDF because it has " + str(pathCount) + " paths which all need to be converted to 1 single path.")
+                if polygonCount > 0:
+                    print("The file: " + filename + " cannot be converted to MSDF because it has " + str(pathCount) + " paths and " + str(polygonCount) + " polygons which all need to be converted to 1 single path.")
+            # print("The file: " + filename + " has: " + str(pathCount) + " paths " + "and " + str(polygonCount) + " polygons.")
 
 filenames = ['F1M_ClubIcons-13.svg', 'F1M_ClubIcons-14.svg']
 
+# add svg files with relative path to svgFileNames
 svgFileNames = []
 for root,dirs,files in os.walk(rootDir):
     for svgFile in files:
@@ -38,4 +43,4 @@ for root,dirs,files in os.walk(rootDir):
 for filename in svgFileNames:
     SVGToMSDFAnalyser(filename)
 
-print "analysis finished!"
+print "MSDF Conversion Validation finished!"
