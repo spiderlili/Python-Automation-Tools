@@ -43,4 +43,4 @@ for root,dirs,files in os.walk(rootDir):
 for filename in svgFileNames:
     SVGToMSDFAnalyser(filename)
 
-print "MSDF Conversion Validation finished!"
+print "All the other files in the folder: " + rootDir + " can be succesfully converted to MSDF. MSDF validation checks finished!"
