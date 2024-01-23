@@ -1,3 +1,4 @@
+# Boilerplate setup
 from PySide6 import QtWidgets
 from shiboken2 import wrapInstance
 

@@ -1,3 +1,4 @@
+# Boilerplate setup
 import sys
 from PySide6 import QtWidgets
 
