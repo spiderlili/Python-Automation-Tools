@@ -11,17 +11,17 @@ class HelloQtWindow(QtWidgets.QDialog):
         super().__init__(parent)
         self.setWindowTitle("Hello Qt")
 
-    # Create controls
-    self.name_line_edit = QtWidgets.QLineEdit()
-    self.cube_btn = QtWidgets.QPushButton("Create Cube")
-    self.sphere_btn = QtWidgets.QPushButton("Create Sphere")
+        # Create controls
+        self.name_line_edit = QtWidgets.QLineEdit()
+        self.cube_btn = QtWidgets.QPushButton("Create Cube")
+        self.sphere_btn = QtWidgets.QPushButton("Create Sphere")
 
-    # Create layout to associate controls with the window
-    layout = QtWidgets.QVBoxLayout()
-    layout.addWidget(self.name_line_edit)
-    layout.addWidget(self.cube_btn)
-    layout.addWidget(self.sphere_btn)
-    self.setlayout(layout)
+        # Create layout to associate controls with the window
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(self.name_line_edit)
+        layout.addWidget(self.cube_btn)
+        layout.addWidget(self.sphere_btn)
+        self.setLayout(layout)
 
 if __name__ == "__main__":
     window = HelloQtWindow()
