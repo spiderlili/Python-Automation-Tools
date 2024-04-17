@@ -23,6 +23,19 @@ class HelloQtWindow(QtWidgets.QDialog):
         layout.addWidget(self.sphere_btn)
         self.setLayout(layout)
 
+        # Create connections
+        self.cube_btn.clicked.connect(self.create_cube)
+        self.sphere_btn.clicked.connect(self.create_sphere)
+    
+    def get_name(self):
+        return(self.name_line_edit.text())
+    
+    def create_cube(self):
+        cmds.polyCube(name=self.get_name())
+
+    def create_sphere(self):
+        cmds.polySphere(name=self.get_name())
+
 if __name__ == "__main__":
     window = HelloQtWindow()
     window.show()
