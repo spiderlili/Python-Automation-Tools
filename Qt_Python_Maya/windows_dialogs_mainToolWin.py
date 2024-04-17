@@ -19,7 +19,7 @@ def maya_main_window():
 
 class MainToolWindow(QtWidgets.QDialog):
     # Reparent to Maya's main window to always display on top even when not on focus
-    def __init__(self, parent=maya_main_window): 
+    def __init__(self, parent=maya_main_window()): 
         super().__init__(parent)
         self.setWindowTitle("Windows Dialogs")
         self.setMinimumSize(400, 300)
