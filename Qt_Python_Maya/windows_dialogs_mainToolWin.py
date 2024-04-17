@@ -1,5 +1,6 @@
 import maya.cmds as cmds
 import maya.OpenMayaUI as omui
+import sys
 
 try:
     # Qt5(<= Maya 2025)
@@ -23,6 +24,10 @@ class MainToolWindow(QtWidgets.QDialog):
         super().__init__(parent)
         self.setWindowTitle("Windows Dialogs")
         self.setMinimumSize(400, 300)
+
+        # Make the dialog a tool window for MacOS to prevent it from falling behind Maya main window
+        if sys.platform == "darwin":
+            self.setWindowFlag(QtCore.Qt.Tool, True) 
 
 if __name__ == "__main__":
     win = MainToolWindow()
