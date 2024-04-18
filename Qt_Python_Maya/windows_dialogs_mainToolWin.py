@@ -28,6 +28,8 @@ class MainToolWindow(QtWidgets.QDialog):
         # Make the dialog a tool window for MacOS to prevent it from falling behind Maya main window
         if sys.platform == "darwin":
             self.setWindowFlag(QtCore.Qt.Tool, True) 
+        
+        QtWidgets.QPushButton("hello", self)
 
 if __name__ == "__main__":
     win = MainToolWindow()
