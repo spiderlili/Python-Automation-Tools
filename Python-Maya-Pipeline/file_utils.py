@@ -8,7 +8,7 @@ def next_version_path(scene_path, extension):
     dir_path = os.path.dirname(scene_path)
     file_name = os.path.basename(scene_path)
     # The base file cannot contain any dots in the name as dot is used as a separator!
-    base_file_name = file.name.split(".")[0]
+    base_file_name = file_name.split(".")[0]
     current_versions = get_current_versions(dir_path, base_file_name)
     print(current_versions)
 
