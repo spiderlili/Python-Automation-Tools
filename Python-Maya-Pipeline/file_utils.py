@@ -17,12 +17,19 @@ def get_current_versions(dir_path, base_file_name):
     current_versions = []
     file_names = os.listdir(dir_path)
     for file_name in file_names:
-        split_file_name = file_name.split(".")
-        if len(split_file_name) == 3:
-            version_num_str = split_file_name[1]
-            try:
-                version_num_int = int(version_num_str)
-            except:
-                continue
-            current_versions.append(version_num_int)
+        # Verify that the base file name matches the file name it’s being compared to
+        if file_name.startswith("{0}".format(base_file_name)):
+            split_file_name = file_name.split(".")
+            if len(split_file_name) == 3:
+                version_num_str = split_file_name[1]
+                try:
+                    version_num_int = int(version_num_str)
+                except:
+                    continue
+                current_versions.append(version_num_int)
+    current_versions.sort()
     return current_versions
+
+if __name__ == "__main__":
+    file_path = "/Users/jing.tan/Documents/GitHub/Python-Automation-Tools/Python-Maya-Pipeline/MayaTestScenes/test_scene_vc.ma"
+    next_version_path(file_path, "ma")
