@@ -8,6 +8,14 @@ def version_saved(file_type = "mayaAscii"):
     if not scene_path:
         om.MGlobal.displayError("Unsaved File!")
         return
+    
+    if file_type == "mayaAscii":
+        extension = "ma"
+    elif file_type == "mayaBinary":
+        extension = "mb"
+    else:
+        om.MGlobal.displayError("Unsupport file type")
+        return
 
 # When finished: will return the file path for the next version to be saved with the updated version number (scene.0001.ma)
 def next_version_path(scene_path, extension):
