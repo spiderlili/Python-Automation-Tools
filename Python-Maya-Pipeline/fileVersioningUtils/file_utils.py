@@ -3,7 +3,7 @@ import os
 import maya.cmds as cmds
 import maya.api.OpenMaya as om # for handling errors & displaying them to Maya's main UI
 
-def version_saved(file_type = "mayaAscii"):
+def versioned_saved(file_type = "mayaAscii"):
     scene_path = cmds.file(q=True, sceneName=True)
     if not scene_path:
         om.MGlobal.displayError("Unsaved File!")
@@ -57,4 +57,4 @@ def get_current_versions(dir_path, base_file_name):
     return current_versions
 
 if __name__ == "__main__":
-    version_saved()
+    versioned_saved()
