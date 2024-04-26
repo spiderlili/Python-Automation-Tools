@@ -5,8 +5,8 @@ from shiboken2 import wrapInstance
 import maya.cmds as cmds
 import maya.OpenMayaUI as omui
 
+# file_utils.py need to be in a directory that’s on Maya’s Python path (.e.g. Maya scripts directory) so it’s recognised as a module & can be imported by the UI script!
 import file_utils
-
 
 class FileVersioningUi(QtWidgets.QDialog):
 
