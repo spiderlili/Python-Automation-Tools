@@ -18,6 +18,9 @@ def version_saved(file_type = "mayaAscii"):
         return
     
     versioned_path = next_version_path(scene_path, extension)
+    cmds.file(rename=versioned_path)
+    saved_file_path = cmds.file(save=True, type=file_type)
+    om.MGlobal.displayInfo("Versioned save: {0}".format(saved_file_path))
 
 # When finished: will return the file path for the next version to be saved with the updated version number (scene.0001.ma)
 def next_version_path(scene_path, extension):
@@ -54,6 +57,4 @@ def get_current_versions(dir_path, base_file_name):
     return current_versions
 
 if __name__ == "__main__":
-    file_path = "/Users/jing.tan/Documents/GitHub/Python-Automation-Tools/Python-Maya-Pipeline/MayaTestScenes/test_scene_vc.ma"
-    next_ver_path = next_version_path(file_path, "ma")
-    print(next_ver_path)
+    version_saved()
