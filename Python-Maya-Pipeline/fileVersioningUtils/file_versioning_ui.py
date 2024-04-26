@@ -1,6 +1,12 @@
-from PySide2 import QtCore
-from PySide2 import QtWidgets
-from shiboken2 import wrapInstance
+# Qt5(<= Maya 2025), Qt6 (> Maya 2025)
+try:
+    from PySide2 import QtCore
+    from PySide2 import QtWidgets 
+    from shiboken2 import wrapInstance
+except:
+    from PySide6 import QtCore
+    from PySide6 import QtWidgets 
+    from shiboken6 import wrapInstance
 
 import maya.cmds as cmds
 import maya.OpenMayaUI as omui
