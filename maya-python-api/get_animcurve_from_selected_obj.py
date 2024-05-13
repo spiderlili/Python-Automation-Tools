@@ -44,7 +44,7 @@ def find_plug(obj, attr_name):
 if __name__ == "__main__":
     selection = om.MGlobal.getActiveSelectionList()
     if selection.length() > 0:
-        obj = selection.getDependMode(0)
+        obj = selection.getDependNode(0)
         anim_curve_fn = get_anim_curve(obj, "translateX")
         
         if not anim_curve_fn:
