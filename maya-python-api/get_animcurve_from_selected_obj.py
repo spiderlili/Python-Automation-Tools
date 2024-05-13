@@ -1,5 +1,20 @@
+import traceback 
 import maya.api.OpenMaya as om
 import maya.api.OpenMayaAnim as oma
+
+# Helper method that creates an AnimCurve node & connect it to the selected object (if one does not exist)
+def create_anim_curve(obj, attr_name):
+    plug = find_plug(obj, attr_name)
+    if not plug or plug.isConnected:
+        return None
+    
+    anim_curve_fn = oma.MFnAnimCurve()
+    try:
+        anim_curve_fn.create(plug, oma.MFnAnimCurve.kAnimCurveUnknown)
+    except:
+        traceback.print_exc() # Print out the error message that raised the exception
+        return None
+    return anim_curve_fn
 
 # Get the animCurve node for a specific attribute on the selected node
 def get_anim_curve(obj, attr_name):
@@ -31,8 +46,14 @@ if __name__ == "__main__":
     if selection.length() > 0:
         obj = selection.getDependMode(0)
         anim_curve_fn = get_anim_curve(obj, "translateX")
+        
+        if not anim_curve_fn:
+            anim_curve_fn = create_anim_curve(obj, "translateX")
+        
         if anim_curve_fn:
             print("Anim Curve Function Name:" + anim_curve_fn.name())
+        else:
+            print("An AnimCurve node is not connected!")
     else:
         om.MGlobal.displayError("An object is not selected!")
 
