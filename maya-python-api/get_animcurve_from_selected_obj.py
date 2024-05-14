@@ -2,6 +2,31 @@ import traceback
 import maya.api.OpenMaya as om
 import maya.api.OpenMayaAnim as oma
 
+def get_current_time():
+    return oma.MAnimControl.currentTime()
+
+def add_key(obj, attr_name):
+    current_time = get_current_time()
+    anim_curve_fn = get_anim_curve(obj, attr_name)
+    if not anim_curve_fn:
+        anim_curve_fn = create_anim_curve(obj, attr_name)
+        if not anim_curve_fn:
+            return None
+    # Verify that a key doesn’t already exist at the current time 
+    index = anim_curve_fn.find(current_time)
+    if index is None:
+        return anim_curve_fn.insertKey(current_time)
+    return None
+
+def remove_key(obj, attr_name):
+    anim_curve_fn = get_anim_curve(obj, attr_name)
+    if not anim_curve_fn:
+        return
+    # Verify that a key already exists at the current time 
+    index = anim_curve_fn.find(get_current_time())
+    if not index is None:
+        anim_curve_fn.remove(index)
+
 # Helper method that creates an AnimCurve node & connect it to the selected object (if one does not exist)
 def create_anim_curve(obj, attr_name):
     plug = find_plug(obj, attr_name)
@@ -26,7 +51,7 @@ def get_anim_curve(obj, attr_name):
     anim_curve_fn = oma.MFnAnimCurve()
 
     if anim_curve_fn.hasObj(source_plug.node()):
-        anim_curve_fn,setObject(source_plug.node())
+        anim_curve_fn.setObject(source_plug.node())
         return anim_curve_fn
     
     return None
@@ -45,6 +70,12 @@ if __name__ == "__main__":
     selection = om.MGlobal.getActiveSelectionList()
     if selection.length() > 0:
         obj = selection.getDependNode(0)
+
+        if add_key(obj, "translateX") is None:
+            remove_key(obj, "translateX")
+
+        """
+        # Add anim curve if none exists
         anim_curve_fn = get_anim_curve(obj, "translateX")
         
         if not anim_curve_fn:
@@ -54,6 +85,7 @@ if __name__ == "__main__":
             print("Anim Curve Function Name:" + anim_curve_fn.name())
         else:
             print("An AnimCurve node is not connected!")
+        """
     else:
         om.MGlobal.displayError("An object is not selected!")
 
