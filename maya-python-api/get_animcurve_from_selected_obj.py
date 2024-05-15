@@ -5,6 +5,12 @@ import maya.api.OpenMayaAnim as oma
 def get_current_time():
     return oma.MAnimControl.currentTime()
 
+def set_value(anim_curve_fn, index, value):
+    anim_curve_fn.setValue(index, value)
+
+def set_time(anim_curve_fn, index, time):
+    anim_curve_fn.setInput(index, time)
+
 def add_key(obj, attr_name):
     current_time = get_current_time()
     anim_curve_fn = get_anim_curve(obj, attr_name)
