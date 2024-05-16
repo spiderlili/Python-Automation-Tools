@@ -81,7 +81,7 @@ if __name__ == "__main__":
     if selection.length() > 0:
         obj = selection.getDependNode(0)
 
-        anim_curve_fn = get_anim_curve(obj, translateY)
+        anim_curve_fn = get_anim_curve(obj, "translateY")
         if anim_curve_fn:
             set_value(anim_curve_fn, 1, 3)
             set_time(anim_curve_fn, 0, get_current_time)
