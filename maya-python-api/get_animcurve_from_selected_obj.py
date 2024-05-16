@@ -8,6 +8,7 @@ def get_current_time():
 def set_value(anim_curve_fn, index, value):
     anim_curve_fn.setValue(index, value)
 
+# Cannot change the order of a key: it would need to be removed from the curve & added back at the new time!
 def set_time(anim_curve_fn, index, time):
     anim_curve_fn.setInput(index, time)
 
@@ -72,10 +73,18 @@ def find_plug(obj, attr_name):
         return None
     return plug
 
+def display_anim_curve_info(anim_curve_fn):
+    print("Number of keys: {0}".format(anim_curve_fn.numKeys))
+
 if __name__ == "__main__":
     selection = om.MGlobal.getActiveSelectionList()
     if selection.length() > 0:
         obj = selection.getDependNode(0)
+
+        anim_curve_fn = get_anim_curve(obj, translateY)
+        if anim_curve_fn:
+            set_value(anim_curve_fn, 1, 3)
+            set_time(anim_curve_fn, 0, get_current_time)
 
         if add_key(obj, "translateX") is None:
             remove_key(obj, "translateX")
