@@ -75,6 +75,29 @@ def find_plug(obj, attr_name):
 
 def display_anim_curve_info(anim_curve_fn):
     print("Number of keys: {0}".format(anim_curve_fn.numKeys))
+    print("Is Static: {0}".format(anim_curve_fn.isStatic)) # Return the same value regardless of the evaluation time
+    print("Pre Infinity Type: {0}".format(anim_curve_fn.preInfinityType)) # Return the same value regardless of the evaluation time
+    print("Post Infinity Type: {0}".format(anim_curve_fn.postInfinityType)) # Return the same value regardless of the evaluation time
+    print("----KEYS----")
+
+    for index in range(anim_curve_fn.numKeys):
+        display_key_info(anim_curve_fn, index)
+
+def display_key_info(anim_curve_fn, index):
+    time_current_frame = anim_curve_fn.input(index).value
+    value = anim_curve_fn.value(index)
+    isBreakdown = anim_curve_fn.isBreakdown(index)
+    tangents_locked = anim_curve_fn.tangentsLocked(index)
+    in_tangent_type = anim_curve_fn.inTangentType(index)
+    in_tangent_values = anim_curve_fn.getTangentXY(index, True)
+    out_tangent_type = anim_curve_fn.outTangentType(index)
+    out_tangent_values = anim_curve_fn.getTangentXY(index, False)
+
+    output = "[{0}] Time: {1}\tValue: {2}\t".format(index, time_current_frame, value)
+    output += "Breakdown: {0}\n\tTangents Locked: {1}\t".format(isBreakdown, tangents_locked)
+    output += "In Tangent: {0} {1}\t".format(in_tangent_type, in_tangent_values)
+    output += "Out Tangent: {0} {1}".format(out_tangent_type, out_tangent_values)
+    print(output)
 
 if __name__ == "__main__":
     selection = om.MGlobal.getActiveSelectionList()
@@ -85,6 +108,7 @@ if __name__ == "__main__":
         if anim_curve_fn:
             set_value(anim_curve_fn, 1, 3)
             set_time(anim_curve_fn, 0, get_current_time())
+            display_anim_curve_info(anim_curve_fn)
 
         if add_key(obj, "translateX") is None:
             remove_key(obj, "translateX")
