@@ -29,7 +29,9 @@ class MainToolWindow(QtWidgets.QDialog):
         if sys.platform == "darwin":
             self.setWindowFlag(QtCore.Qt.Tool, True) 
         
-        QtWidgets.QPushButton("hello", self)
+        # Adding widgets example
+        #QtWidgets.QPushButton("hello", self)
+        self.button_a = QtWidgets.QPushButton("Button A")
 
 if __name__ == "__main__":
     win = MainToolWindow()
