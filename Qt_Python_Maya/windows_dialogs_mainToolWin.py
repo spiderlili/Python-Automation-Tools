@@ -31,7 +31,16 @@ class MainToolWindow(QtWidgets.QDialog):
         
         # Adding widgets example
         #QtWidgets.QPushButton("hello", self)
-        self.button_a = QtWidgets.QPushButton("Button A")
+        self.button_a = QtWidgets.QPushButton("Button A") # Parent button to window for it to 
+        self.button_b = QtWidgets.QPushButton("Button B") 
+        # self.button_b.move(0, 30)
+
+        # Create layouts
+        main_layout = QtWidgets.QVBoxLayout() 
+        self.setLayout(main_layout) # Set windows as parent of layout
+        main_layout.addWidget(self.button_a)
+        main_layout.addWidget(self.button_b)
+        main_layout.addStretch() # Push the buttons to the top of the UI
 
 if __name__ == "__main__":
     win = MainToolWindow()
