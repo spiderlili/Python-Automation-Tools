@@ -39,10 +39,13 @@ class MainToolWindow(QtWidgets.QDialog):
         self.button_2 = QtWidgets.QPushButton("Button 2") 
         self.button_3 = QtWidgets.QPushButton("Button 3") 
         self.button_4 = QtWidgets.QPushButton("Button 4") 
+        self.wdg_a = QtWidgets.QLineEdit()
+        self.wdg_b = QtWidgets.QLineEdit()
+        self.wdg_c = QtWidgets.QCheckBox("Enabled")
         # self.button_b.move(0, 30)
 
+        '''
         # Create layouts
-        
         main_layout = QtWidgets.QVBoxLayout() 
         # main_layout = QtWidgets.QHBoxLayout() 
         self.setLayout(main_layout) # Set windows as parent of layout
@@ -54,7 +57,7 @@ class MainToolWindow(QtWidgets.QDialog):
         main_layout.addWidget(self.button_d)
         main_layout.addStretch() # Push the buttons to the top of the UI
         
-
+        # Grid layout
         grid_layout = QtWidgets.QGridLayout()
         grid_layout.setContentsMargins(2, 10, 2, 10)
         self.setLayout(grid_layout)
@@ -62,6 +65,13 @@ class MainToolWindow(QtWidgets.QDialog):
         grid_layout.addWidget(self.button_2, 0, 1)
         grid_layout.addWidget(self.button_3, 1, 0)
         grid_layout.addWidget(self.button_4, 1, 1)
+        '''
+        # Form layout
+        form_layout = QtWidgets.QFormLayout()
+        self.setLayout(form_layout)
+        form_layout.addRow("Name: ", self.wdg_a)
+        form_layout.addRow("Address: ", self.wdg_b)
+        form_layout.addRow("", self.wdg_c)
 
 if __name__ == "__main__":
     win = MainToolWindow()
