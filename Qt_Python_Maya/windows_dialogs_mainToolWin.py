@@ -35,16 +35,33 @@ class MainToolWindow(QtWidgets.QDialog):
         self.button_b = QtWidgets.QPushButton("Button B") 
         self.button_c = QtWidgets.QPushButton("Button C") 
         self.button_d = QtWidgets.QPushButton("Button D") 
+        self.button_1 = QtWidgets.QPushButton("Button 1") 
+        self.button_2 = QtWidgets.QPushButton("Button 2") 
+        self.button_3 = QtWidgets.QPushButton("Button 3") 
+        self.button_4 = QtWidgets.QPushButton("Button 4") 
         # self.button_b.move(0, 30)
 
         # Create layouts
+        
         main_layout = QtWidgets.QVBoxLayout() 
+        # main_layout = QtWidgets.QHBoxLayout() 
         self.setLayout(main_layout) # Set windows as parent of layout
+        main_layout.setSpacing(2) # fix the default spacing between widgets
+        main_layout.setContentsMargins(2, 10, 2, 10)
         main_layout.addWidget(self.button_a)
         main_layout.addWidget(self.button_b)
         main_layout.addWidget(self.button_c)
         main_layout.addWidget(self.button_d)
         main_layout.addStretch() # Push the buttons to the top of the UI
+        
+
+        grid_layout = QtWidgets.QGridLayout()
+        grid_layout.setContentsMargins(2, 10, 2, 10)
+        self.setLayout(grid_layout)
+        grid_layout.addWidget(self.button_1, 0, 0)
+        grid_layout.addWidget(self.button_2, 0, 1)
+        grid_layout.addWidget(self.button_3, 1, 0)
+        grid_layout.addWidget(self.button_4, 1, 1)
 
 if __name__ == "__main__":
     win = MainToolWindow()
