@@ -33,6 +33,8 @@ class MainToolWindow(QtWidgets.QDialog):
         #QtWidgets.QPushButton("hello", self)
         self.button_a = QtWidgets.QPushButton("Button A") # Parent button to window for it to 
         self.button_b = QtWidgets.QPushButton("Button B") 
+        self.button_c = QtWidgets.QPushButton("Button C") 
+        self.button_d = QtWidgets.QPushButton("Button D") 
         # self.button_b.move(0, 30)
 
         # Create layouts
@@ -40,6 +42,8 @@ class MainToolWindow(QtWidgets.QDialog):
         self.setLayout(main_layout) # Set windows as parent of layout
         main_layout.addWidget(self.button_a)
         main_layout.addWidget(self.button_b)
+        main_layout.addWidget(self.button_c)
+        main_layout.addWidget(self.button_d)
         main_layout.addStretch() # Push the buttons to the top of the UI
 
 if __name__ == "__main__":
