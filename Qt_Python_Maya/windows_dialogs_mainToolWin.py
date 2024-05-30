@@ -53,6 +53,9 @@ class MainToolWindow(QtWidgets.QDialog):
         self.cb3 = QtWidgets.QCheckBox("Option 3")
         self.cb4 = QtWidgets.QCheckBox("Option 4")
 
+        self.ok_btn = QtWidgets.QPushButton("OK")
+        self.cancel_btn = QtWidgets.QPushButton("Cancel")
+
         # self.button_b.move(0, 30)
 
         '''
@@ -84,13 +87,33 @@ class MainToolWindow(QtWidgets.QDialog):
         rb_layout.addWidget(self.rb2)
         rb_layout.addWidget(self.rb3)
 
+        # Grid layout of 4 checkboxes
+        cb_layout = QtWidgets.QGridLayout()
+        cb_layout.setContentsMargins(0, 0, 0, 0)
+        cb_layout.addWidget(self.cb1, 0, 0)
+        cb_layout.addWidget(self.cb2, 0, 1)
+        cb_layout.addWidget(self.cb3, 1, 0)
+        cb_layout.addWidget(self.cb3, 1, 1)
+
         # Form layout
         form_layout = QtWidgets.QFormLayout()
-        self.setLayout(form_layout)
+        form_layout.setSpacing(6)
         form_layout.addRow("Name: ", self.wdg_a)
         form_layout.addRow("Address: ", self.wdg_b)
-        form_layout.addRow("", self.wdg_c)
         form_layout.addRow("", rb_layout)
+        form_layout.addRow("", cb_layout)
+
+        # Button layout parented to a window instead of a form
+        btn_layout = QtWidgets.QHBoxLayout()
+        btn_layout.setContentsMargins(0, 0, 0, 0)
+        btn_layout.addStretch()
+        btn_layout.addWidget(self.ok_btn)
+        btn_layout.addWidget(self.cancel_btn)
+
+        # Arrange widgets vertically in a main top level layout, use it to contain a child form layout at the top & a button layout at the bottom
+        main_layout = QtWidgets.QVBoxLayout(self)
+        main_layout.addLayout(form_layout)
+        main_layout.addLayout(btn_layout)
 
 if __name__ == "__main__":
     win = MainToolWindow()
