@@ -116,5 +116,13 @@ class MainToolWindow(QtWidgets.QDialog):
         main_layout.addLayout(btn_layout)
 
 if __name__ == "__main__":
+    # Delete existing window instance before a new one is shown
+    try:
+        win.close()
+        win.deleteLater()
+    except:
+        pass
+
+    # Show window
     win = MainToolWindow()
     win.show()
