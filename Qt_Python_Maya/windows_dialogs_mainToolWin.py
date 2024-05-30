@@ -42,6 +42,17 @@ class MainToolWindow(QtWidgets.QDialog):
         self.wdg_a = QtWidgets.QLineEdit()
         self.wdg_b = QtWidgets.QLineEdit()
         self.wdg_c = QtWidgets.QCheckBox("Enabled")
+        self.name_le = QtWidgets.QLineEdit()
+        self.address_le = QtWidgets.QLineEdit()
+        self.rb1 = QtWidgets.QRadioButton("RB 1")
+        self.rb1.setChecked(True)
+        self.rb2 = QtWidgets.QRadioButton("RB 2")
+        self.rb3 = QtWidgets.QRadioButton("RB 3")
+        self.cb1 = QtWidgets.QCheckBox("Option 1")
+        self.cb2 = QtWidgets.QCheckBox("Option 2")
+        self.cb3 = QtWidgets.QCheckBox("Option 3")
+        self.cb4 = QtWidgets.QCheckBox("Option 4")
+
         # self.button_b.move(0, 30)
 
         '''
@@ -66,12 +77,20 @@ class MainToolWindow(QtWidgets.QDialog):
         grid_layout.addWidget(self.button_3, 1, 0)
         grid_layout.addWidget(self.button_4, 1, 1)
         '''
+        # Radio buttons layout
+        rb_layout = QtWidgets.QHBoxLayout()
+        rb_layout.setContentsMargins(0, 0, 0, 0) # Starting point
+        rb_layout.addWidget(self.rb1)
+        rb_layout.addWidget(self.rb2)
+        rb_layout.addWidget(self.rb3)
+
         # Form layout
         form_layout = QtWidgets.QFormLayout()
         self.setLayout(form_layout)
         form_layout.addRow("Name: ", self.wdg_a)
         form_layout.addRow("Address: ", self.wdg_b)
         form_layout.addRow("", self.wdg_c)
+        form_layout.addRow("", rb_layout)
 
 if __name__ == "__main__":
     win = MainToolWindow()
