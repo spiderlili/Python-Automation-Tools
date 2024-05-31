@@ -117,11 +117,36 @@ class MainToolWindow(QtWidgets.QDialog):
 
         # Create connections
         self.cancel_btn.clicked.connect(self.close) 
-        self.name_le.editingFinished.connect(self.print_name) # Try the textChanged signal if want to print each character input
+        self.name_le.editingFinished.connect(self.print_name) 
+        # self.name_le.textChanged.connect(self.print_name) # Print each character input
+        self.cb1.toggled.connect(self.print_checkbox)
+        self.cb2.toggled.connect(self.print_checkbox)
+        self.cb3.toggled.connect(self.print_checkbox)
+        self.cb4.toggled.connect(self.print_checkbox)
 
     def print_name(self):
         name = self.name_le.text()
         print(name)
+
+    # Use the sender method to determine which checkbox called this method
+    def print_checkbox(self, checked):
+        cb = self.sender()
+        if cb == self.cb1:
+            cb_name = "Option 1"
+        elif cb == self.cb2:
+            cb_name = "Option 2"
+        elif cb == self.cb3:
+            cb_name = "Option 3"
+        elif cb == self.cb4:
+            cb_name = "Option 4"
+        else:
+            return
+        
+        if checked:
+            print(f"{cb_name} is checked")
+        else:
+            print(f"{cb_name} is not checked")
+
 
 if __name__ == "__main__":
     # Delete existing window instance before a new one is shown
