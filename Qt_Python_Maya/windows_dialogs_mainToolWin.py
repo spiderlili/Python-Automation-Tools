@@ -115,6 +115,14 @@ class MainToolWindow(QtWidgets.QDialog):
         main_layout.addLayout(form_layout)
         main_layout.addLayout(btn_layout)
 
+        # Create connections
+        self.cancel_btn.clicked.connect(self.close) 
+        self.name_le.editingFinished.connect(self.print_name) # Try the textChanged signal if want to print each character input
+
+    def print_name(self):
+        name = self.name_le.text()
+        print(name)
+
 if __name__ == "__main__":
     # Delete existing window instance before a new one is shown
     try:
