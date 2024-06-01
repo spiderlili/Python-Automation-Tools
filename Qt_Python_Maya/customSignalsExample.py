@@ -20,8 +20,17 @@ def maya_main_window():
 
 # Create a custom signal: must extend the Qt object class or any class derived from QObject
 class CustomLineEdit(QtWidgets.QLineEdit): 
-    # Create the 2 signal objects
-    pass
+    # Create the 2 signal objects (instance of the Signal class in the QtCore module)
+    enter_pressed = QtCore.Signal(str)
+    return_pressed = QtCore.Signal(str)
+
+    # keyPressEvent is automatically called anytime the widget has focus & a key on the keyboard is pressed. To keep all the existing QLineEdit functionality use super()
+    def keyPressEvent(self, e):
+        super().keyPressEvent(e)
+        if e.key() == QtCore.Qt.Key_Enter:
+            self.enter_pressed.emit(self.text()) # Pass the text from the lineEdit
+        elif e.key() == QtCore.Qt.Key_Return:
+            self.return_pressed.emit(self.text())  
 
 class MainToolWindow(QtWidgets.QDialog):
     # Reparent to Maya's main window to always display on top even when not on focus
@@ -39,14 +48,15 @@ class MainToolWindow(QtWidgets.QDialog):
         self.create_connections()
         
     def create_widgets(self):
-        self.name_le = QtWidgets.QLineEdit()
+        # self.name_le = QtWidgets.QLineEdit() # the standard QLineEdit does not include the custom signals
+        self.name_le = CustomLineEdit()
         self.ok_btn = QtWidgets.QPushButton("OK")
         self.cancel_btn = QtWidgets.QPushButton("Cancel")
 
     def create_layout(self):
         form_layout = QtWidgets.QFormLayout()
         form_layout.setSpacing(6)
-        form_layout.addRow("Name: ", self.wdg_a)
+        form_layout.addRow("Name", self.name_le)
 
         # Button layout parented to a window instead of a form
         btn_layout = QtWidgets.QHBoxLayout()
@@ -61,7 +71,8 @@ class MainToolWindow(QtWidgets.QDialog):
         main_layout.addLayout(btn_layout)
 
     def create_connections(self):
-        pass
+        self.name_le.enter_pressed.connect(self.on_enter_pressed)
+        self.name_le.return_pressed.connect(self.on_return_pressed)
 
     def on_enter_pressed(self, texet):
         print(f"Enter key pressed: {text}")
