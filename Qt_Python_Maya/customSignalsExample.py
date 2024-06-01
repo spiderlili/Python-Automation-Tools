@@ -18,6 +18,11 @@ def maya_main_window():
     main_window_ptr = omui.MQtUtil.mainWindow()
     return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
 
+# Create a custom signal: must extend the Qt object class or any class derived from QObject
+class CustomLineEdit(QtWidgets.QLineEdit): 
+    # Create the 2 signal objects
+    pass
+
 class MainToolWindow(QtWidgets.QDialog):
     # Reparent to Maya's main window to always display on top even when not on focus
     def __init__(self, parent=maya_main_window()): 
