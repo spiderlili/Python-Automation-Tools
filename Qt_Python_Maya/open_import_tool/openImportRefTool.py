@@ -36,6 +36,11 @@ class OpenImportDialog(QtWidgets.QDialog):
 
     def create_widgets(self):
         self.filepath_le = QtWidgets.QLineEdit()
+
+        # Temporarily hardcode a file path into the line edit to speed up development: can just click the Apply button during testing to verify whether or not the code changes are working
+        testSceneTemp = "/Users/jing.tan/Documents/maya/projects/maya-2017-rigging-introduction/project_files/Maya_Files/Intro_To_Rigging_Maya_2017/scenes/m01-01_begin.ma"
+        self.filepath_le.setText(testSceneTemp)
+
         self.select_file_path_btn = QtWidgets.QPushButton()
         # Show a Maya-provided folder icon that's commonly used for file open operations using Qt resource 
         self.select_file_path_btn.setIcon(QtGui.QIcon(":fileOpen.png"))
@@ -74,7 +79,19 @@ class OpenImportDialog(QtWidgets.QDialog):
         main_layout.addLayout(button_layout)
 
     def create_connections(self):
-        pass
+        self.select_file_path_btn.clicked.connect(self.show_file_select_dialog)
+        self.open_rb.toggled.connect(self.set_force_cb_visible)
+        self.apply_btn.clicked.connect(self.load_file)
+        self.close_btn.clicked.connect(self.close)
+
+    def show_file_select_dialog(self):
+        print("TODO: show_file_select_dialog")
+    
+    def set_force_cb_visible(self, checked):
+        self.force_cb.setVisible(checked) # If the radio button calling this is checked: the force checkbox will be visible
+
+    def load_file(self):
+        print("TODO: load_file on Apply button click")
 
 if __name__ == "__main__":
     try:
