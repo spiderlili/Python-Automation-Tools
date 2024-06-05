@@ -38,7 +38,7 @@ class OpenImportDialog(QtWidgets.QDialog):
         self.filepath_le = QtWidgets.QLineEdit()
 
         # Temporarily hardcode a file path into the line edit to speed up development: can just click the Apply button during testing to verify whether or not the code changes are working
-        testSceneTemp = "/Users/jing.tan/Documents/maya/projects/maya-2017-rigging-introduction/project_files/Maya_Files/Intro_To_Rigging_Maya_2017/scenes/m01-01_begin.ma"
+        testSceneTemp = "/Users/jing.tan/Documents/GitHub/Python-Automation-Tools/Qt_Python_Maya/open_import_tool/testScene.ma"
         self.filepath_le.setText(testSceneTemp)
 
         self.select_file_path_btn = QtWidgets.QPushButton()
@@ -91,7 +91,38 @@ class OpenImportDialog(QtWidgets.QDialog):
         self.force_cb.setVisible(checked) # If the radio button calling this is checked: the force checkbox will be visible
 
     def load_file(self):
-        print("TODO: load_file on Apply button click")
+        file_path = self.filepath_le.text()
+        if not file_path:
+            return
+        
+        file_info = QtCore.QFileInfo(file_path)
+        if not file_info.exists():
+            om.MGlobal.displayError("File does not exist")
+            return
+        
+        if self.open_rb.isChecked():
+            self.open_file(file_path)
+        elif self.import_rb.isChecked():
+            self.import_file(file_path)
+        elif self.reference_rb.isChecked():
+            self.reference_file(file_path)
+
+    def open_file(self, file_path):
+        forced = self.force_cb.isChecked()
+        if not forced and cmds.file(q=True, modified=True):
+            result = QtWidgets.QMessageBox.question(self, "Modified", "Current scene has unsaved changes. Continue?")
+            if result == QtWidgets.QMessageBox.StandardButton.Yes:
+                forced = True
+            else:
+                return
+        # If this was not saved in an earlier Maya version: it won't display a warning 
+        cmds.file(file_path, open=True, ignoreVersion=True, force=forced)
+
+    def import_file(self, file_path):
+        print("TODO: import file")
+
+    def reference_file(self, file_path):
+        print("TODO: reference file")
 
 if __name__ == "__main__":
     try:
