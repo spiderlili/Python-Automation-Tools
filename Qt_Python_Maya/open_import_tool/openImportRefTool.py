@@ -115,14 +115,15 @@ class OpenImportDialog(QtWidgets.QDialog):
                 forced = True
             else:
                 return
+        
         # If this was not saved in an earlier Maya version: it won't display a warning 
         cmds.file(file_path, open=True, ignoreVersion=True, force=forced)
 
     def import_file(self, file_path):
-        print("TODO: import file")
+        cmds.file(file_path, i=True, ignoreVersion=True)
 
     def reference_file(self, file_path):
-        print("TODO: reference file")
+        cmds.file(file_path, reference=True, ignoreVersion=True)
 
 if __name__ == "__main__":
     try:
