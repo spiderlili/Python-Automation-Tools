@@ -21,6 +21,9 @@ def maya_main_window():
     return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
 
 class OpenImportDialog(QtWidgets.QDialog):
+    FILE_FILTERS = "Maya (*.ma *.mb);;Maya ASCII (*.ma);;Maya Binary (*.mb);;All Files (*.*)"
+    selected_filter = "Maya (*.ma *.mb)"
+
     def __init__(self, parent=maya_main_window()):
         super(OpenImportDialog, self).__init__(parent)
         self.setWindowTitle("Open/Import/Reference")
@@ -38,8 +41,8 @@ class OpenImportDialog(QtWidgets.QDialog):
         self.filepath_le = QtWidgets.QLineEdit()
 
         # Temporarily hardcode a file path into the line edit to speed up development: can just click the Apply button during testing to verify whether or not the code changes are working
-        testSceneTemp = "/Users/jing.tan/Documents/GitHub/Python-Automation-Tools/Qt_Python_Maya/open_import_tool/testScene.ma"
-        self.filepath_le.setText(testSceneTemp)
+        # testSceneTemp = "/Users/jing.tan/Documents/GitHub/Python-Automation-Tools/Qt_Python_Maya/open_import_tool/testScene.ma"
+        # self.filepath_le.setText(testSceneTemp)
 
         self.select_file_path_btn = QtWidgets.QPushButton()
         # Show a Maya-provided folder icon that's commonly used for file open operations using Qt resource 
@@ -85,6 +88,15 @@ class OpenImportDialog(QtWidgets.QDialog):
         self.close_btn.clicked.connect(self.close)
 
     def show_file_select_dialog(self):
+        file_path = self.filepath_le.text()
+        if not file_path:
+            file_path = cmds.internalVar(userAppDir=True)
+
+        # Selected filter will be updated when the user selects a file path - will always have the most recently selected filter available the next time the window is displayed
+        file_path, self.selected_filter = QtWidgets.QFileDialog.getOpenFileName(self, "Select File", file_path, self.FILE_FILTERS, self.selected_filter)
+        if file_path:
+            self.filepath_le.setText(file_path)
+
         print("TODO: show_file_select_dialog")
     
     def set_force_cb_visible(self, checked):
