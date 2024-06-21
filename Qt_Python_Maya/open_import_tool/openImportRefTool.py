@@ -23,6 +23,18 @@ def maya_main_window():
 class OpenImportDialog(QtWidgets.QDialog):
     FILE_FILTERS = "Maya (*.ma *.mb);;Maya ASCII (*.ma);;Maya Binary (*.mb);;All Files (*.*)"
     selected_filter = "Maya (*.ma *.mb)"
+    dialog_instance = None
+
+    @classmethod
+    def show_dialog(cls):
+        if not cls.dialog_instance:
+            cls.dialog_instance = OpenImportDialog()
+        
+        if cls.dialog_instance.isHidden():
+            cls.dialog_instance.show()
+        else:
+            cls.dialog_instance.raise_() # avoid problems: raise is a Python keyword
+            cls.dialog_instance.activateWindow()
 
     def __init__(self, parent=maya_main_window()):
         super(OpenImportDialog, self).__init__(parent)
